@@ -1,0 +1,22 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: ingress-kibana
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"nginx.ingress.kubernetes.io/rewrite-target":"/"},"name":"ingress-kibana","namespace":"default"},"spec":{"ingressClassName":"nginx","rules":[{"host":"nginx123.devopsfriends.com","http":{"paths":[{"backend":{"service":{"name":"quickstart-kb-http","port":{"number":5601}}},"path":"/kibana","pathType":"Prefix"}]}}]}}
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: nginx123.devopsfriends.com
+      http:
+        paths:
+          - path: /kibana123
+            pathType: Prefix
+            backend:
+              service:
+                name: kibana-kibana
+                port:
+                  number: 5601
+

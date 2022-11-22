@@ -1,0 +1,16 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: sravan-webserver
+  namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`sravan123.devopsfriends.com`)
+      kind: Rule
+      services:
+        - name: sravan-webserver
+          port: 5000
+

@@ -1,0 +1,66 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: nginx-redirect-scheme
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+    port: "443"
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: nginx-htpasswd-scheme
+spec:
+  basicAuth:
+    secret: authsecret
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: authsecret
+data:
+  users: | 
+    c3JhdmFuOiRhcHIxJERrSkk3LmZ5JDBZV0VDSDMueVAzRHBieHpxRXV6NjEKCg==
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: sravan-webserver-http
+  namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`sravan123.devopsfriends.com`)
+      kind: Rule
+      middlewares:
+        - name: nginx-redirect-scheme
+      services:
+        - name: sravan-webserver
+          port: 5000
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: sravan-webserver-https
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`sravan123.devopsfriends.com`)
+      kind: Rule
+      middlewares:
+        - name: nginx-htpasswd-scheme     
+      services:
+        - name: sravan-webserver
+          port: 5000
+  tls:
+    certResolver: pebble
