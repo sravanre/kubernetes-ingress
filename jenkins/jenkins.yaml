@@ -21,6 +21,11 @@ spec:
             containerPort: 8080
           - name: jnlp-port
             containerPort: 50000
+        securityContext:
+          allowPrivilegeEscalation: true
+          privileged: true
+          readOnlyRootFilesystem: false
+          runAsUser: 0
         volumeMounts:
           - name: jenkins-vol
             mountPath: /var/jenkins_home
