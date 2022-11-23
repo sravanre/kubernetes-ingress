@@ -1,0 +1,34 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: jenkins-http
+  namespace: jenkins
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`jenkins.devopsfriends.com`)
+      kind: Rule
+      # middlewares:
+      #   - name: jenkins-redirect-scheme      
+      services:
+        - name: jenkins
+          port: 8080
+# ---
+# apiVersion: traefik.containo.us/v1alpha1
+# kind: IngressRoute
+# metadata:
+#   name: jenkins-ingress
+#   namespace: jenkins
+# spec:
+#   entryPoints:
+#     - websecure
+#   routes:
+#     - match: Host(`jenkins.devopsfriends.com`)
+#       kind: Rule
+#       services:
+#         - name: jenkins
+#           port: 8080
+#   tls:
+#     certResolver: pebble
