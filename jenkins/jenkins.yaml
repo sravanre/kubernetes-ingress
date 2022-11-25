@@ -14,22 +14,28 @@ spec:
         app: jenkins
     spec:
       containers:
-      - name: jenkins
-        image: jenkins/jenkins:lts
-        ports:
-          - name: http-port
-            containerPort: 8080
-          - name: jnlp-port
-            containerPort: 50000
-        securityContext:
-          allowPrivilegeEscalation: true
-          privileged: true
-          readOnlyRootFilesystem: false
-          runAsUser: 0
-        volumeMounts:
+        - name: jenkins
+          image: jenkins/jenkins:lts
+          ports:
+            - name: http-port
+              containerPort: 8080
+            - name: jnlp-port
+              containerPort: 50000
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: true
+            readOnlyRootFilesystem: false
+            runAsUser: 0
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+          volumeMounts:
+            - name: jenkins-vol
+              mountPath: /var/jenkins_home
+        volumes:
           - name: jenkins-vol
-            mountPath: /var/jenkins_home
-      volumes:
-        - name: jenkins-vol
-          persistentVolumeClaim:
-            claimName: jenkins-pvc
+            persistentVolumeClaim:
+              claimName: jenkins-pvc
