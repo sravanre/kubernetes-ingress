@@ -2,17 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    run: nginx
-  name: nginx-deploy-red
+    run: nginx-rama
+  name: nginx-deploy-ramakrishna
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: nginx-red
+      run: nginx-rama
   template:
     metadata:
       labels:
-        run: nginx-red
+        run: nginx-rama
     spec:
       volumes:
       - name: webdata
@@ -23,14 +23,16 @@ spec:
         volumeMounts:
         - name: webdata
           mountPath: "/webdata"
-        command: ["/bin/sh", "-c", 'echo "<h1>I am <font color=red>HOW ARE YOU DOING TODAY SHANINGSTI</font></h1>" > /webdata/index.html']
-      containers:
+        command: ["/bin/sh", "-c", 'echo "<h1><font color=red>HI I am ramakrishna , working as a linux engineer, \n HOW ARE YOU DOING TODAY wellboy</font></h1><img src="https://thumbs.dreamstime.com/z/tiger-wild-winter-nature-amur-tiger-running-snow-action-wildlife-scene-danger-animal-cold-winter-tajga-russ-84783074.jpg" alt="W3Schools.com">
+                    " > /webdata/index.html']
+      containers: 
       - image: nginx
         name: nginx
         volumeMounts:
         - name: webdata
           mountPath: "/usr/share/nginx/html"
 
+---
 
 ---
 
@@ -39,14 +41,15 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    run: nginx
-  name: nginx-deploy-red
+    run: nginx-rama
+  name: nginx-deploy-ramakrishna
 spec:
   ports:
   - port: 80
     protocol: TCP
     targetPort: 80
   selector:
-    run: nginx-red
+    run: nginx-rama
 status:
   loadBalancer: {}
+

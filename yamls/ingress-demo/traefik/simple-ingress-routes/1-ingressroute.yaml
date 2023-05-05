@@ -11,6 +11,6 @@ spec:
     - match: Host(`nginx.example.com`)
       kind: Rule
       services:
-        - name: nginx-deploy-main
+        - name: nginx-deploy-red
           port: 80
 

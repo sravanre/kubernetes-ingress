@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: ingress-nginx-ramakrishna
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: ramakrishna.laplastech.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-deploy-ramakrishna
+            port:
+              number: 80
+
+# working ingress file for the nginx-controller

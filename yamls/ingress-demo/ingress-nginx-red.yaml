@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: ingress-nginx-red
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: nginx123.laplastech.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx-deploy-red
+            port:
+              number: 80
+
+# working ingress file for the nginx-controller
+
+
