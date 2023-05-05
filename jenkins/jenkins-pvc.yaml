@@ -11,4 +11,5 @@ spec:
     requests:
       storage: 10Gi
   storageClassName: do-block-storage
+  # storageClassName: vultr-block-storage
   volumeMode: Filesystem

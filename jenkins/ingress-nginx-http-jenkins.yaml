@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt
+  name: jenkins-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: jenkins.laplastech.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jenkins
+            port:
+              number: 8080
+  tls:
+  - hosts:
+    - nginx123.laplastech.cloud
+    secretName: nginx-deploy-cert-jenkins
+
+
+## may 5 , 2023 ,: this setup is not working , but it was working on the other configuraton 
