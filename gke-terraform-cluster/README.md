@@ -8,3 +8,5 @@ required but highly recommended to keep your GKE cluster isolated.
 `terraform init`
 `terraform apply --auto-approve`
 `terraform destroy --auto-approve`
+
+
