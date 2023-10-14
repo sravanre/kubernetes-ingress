@@ -13,7 +13,7 @@ gcloud config get-value project > /var/tmp/newfile
 #update it on the go with sed utility
 sed -i "s/NEW_Project_ID/$(cat /var/tmp/newfile)/g" ~/kubernetes-ingress/gke-terraform-cluster/terraform.tfvars
 
-# spin the cluster up with terraform
+# spin the cluster up with terraform , initializatoin , plan and start of the terraform
 terraform init
 terraform plan 
 terraform apply --auto-approve
