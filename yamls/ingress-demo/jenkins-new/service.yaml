@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-svc
+  namespace: jenkins
+  annotations:
+   cloud.google.com/neg: '{"ingress": true}'
+  labels:
+    app: jenkins
+spec:
+  ports:
+  - name: jenkinsport
+    port: 8080
+    targetPort: 8080
+  - name: slaveconnectors
+    port: 50000
+    targetPort: 50000
+  selector:
+    app: jenkins
