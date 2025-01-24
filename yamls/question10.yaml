@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ds-important
+  namespace: project-tiger
+  labels:
+    k8s-app: fluentd-logging
+spec:
+  selector:
+    matchLabels:
+      name: ds-important
+  template:
+    metadata:
+      labels:
+        name: ds-important
+    spec:
+      containers:
+      - name: ds-important
+        image: httpd:2.4-apline
+        resources:
+          requests:
+            cpu: 10m
+            memory: 10Mi

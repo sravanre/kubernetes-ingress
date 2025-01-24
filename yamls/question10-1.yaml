@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ds-veryimportant
+  namespace: project-tiger
+  labels:
+    k8s-app: ds-veryimportant
+spec:
+  selector:
+    matchLabels:
+      name: ds-veryimportant
+  template:
+    metadata:
+      labels:
+        name: ds-veryimportant
+    spec:
+      tolerations:
+      # these tolerations are to have the daemonset runnable on control plane nodes
+      # remove them if your control plane nodes should not run pods
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      containers:
+      - name: ds-veryimportant
+        image: nginx
+        resources:
+          requests:
+            cpu: 100m
+            memory: 200Mi

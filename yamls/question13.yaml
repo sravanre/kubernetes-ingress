@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: pod
+  name: multi-container-playground
+spec:
+  containers:
+  - image: nginx:1.17.6-alpine
+    name: c1
+    volumeMounts:
+    - name: vol1
+      mountPath: /test
+    env:
+      - name: MY_NODE_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: spec.nodeName
+
+  - image: busybox:1.31.1
+    name: c2
+    volumeMounts:
+    - name: vol1
+      mountPath: /test
+    command:
+      - /bin/bash
+      - -c
+      - 'while true;do data >> /test/data.log;sleep 1;done'
+
+  - image: busybox:1.31.1
+    name: c3
+    volumeMounts:
+    - name: vol1
+      mountPath: /test
+    command:
+      - /bin/bash
+      - -c
+      - "tail -f /test/data.log"
+
+  volumes:
+    - name: vol1
+      emptyDir: {}
